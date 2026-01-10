@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-demo
+  labels:
+   env: demo
+spec:
+  template:
+    metadata:
+      labels:
+        env: demo
+      name: nginx
+    spec:
+      containers:
+        - image: nginx
+          name: nginx
+  # desired number of pods
+  replicas: 3  
+  selector:
+   matchLabels:
+    # Every pod with this label will be managed by the replicaset
+    env: demo
