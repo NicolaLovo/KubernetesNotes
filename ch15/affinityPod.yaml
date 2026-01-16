@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources: {}
+
+  affinity:
+    nodeAffinity:
+      # required node affinity
+      requiredDuringSchedulingIgnoredDuringExecution:
+        # Conditions
+        nodeSelectorTerms:
+          - matchExpressions:
+              # The disktype affinity must be in ("ssd", "hdd")
+              - key: disktype
+                # Many operators are available
+                operator: In
+                values:
+                  - ssd
+                  - hdd
+      # best-effort node affinity
+      preferredDuringSchedulingIgnoredDuringExecution:
+      # weight = how strong is the preference (1-100) -> how important is it that this preference is met  
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: cpu-type
+                # the node should have any cpu-type defined (any value, but it must exist)
+                operator: Exists
+
+
