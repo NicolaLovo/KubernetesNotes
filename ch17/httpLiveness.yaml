@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy
+spec:
+  containers:
+  - image: myImage
+    name: myImage
+    ports:
+      - containerPort: 8080
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 8080
+      initialDelaySeconds: 5  
+      periodSeconds: 5

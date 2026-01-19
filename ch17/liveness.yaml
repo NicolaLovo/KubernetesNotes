@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busy
+spec:
+  containers:
+  - image: busybox
+    name: busybox
+    args:
+      - /bin/sh
+      - -c
+      # Create a file /tmp/healthy after 30 seconds, then delete it after another 30 seconds
+      - touch /tmp/healthy; sleep 30; rm -f /tmp/healthy; sleep 600
+    livenessProbe:
+      exec:
+        command:
+          - cat
+          - /tmp/healthy
+      initialDelaySeconds: 5  
+      periodSeconds: 5
