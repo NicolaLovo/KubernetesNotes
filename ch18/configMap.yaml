@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-cm
+data:
+  val1: hello
+  val2: hello2
