@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-nginx
+spec:
+  # Apply policy to pods with label app=nginx
+  podSelector:
+    matchLabels:
+      app: backend
+  ingress:
+  - from:
+    # Allow ingress traffic from pods with label app=frontend
+    - podSelector:
+        matchLabels:
+          app: frontend
+        # Allow traffic only from this port
+    ports:
+    - protocol: TCP
+      port: 80
